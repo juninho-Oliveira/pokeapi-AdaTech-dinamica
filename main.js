@@ -1,9 +1,7 @@
 async function poke() {
 
   try {
-    const tipoPokemonSelect = document.getElementById('tipoSelector');
-
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=14`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
     let data = await response.json()
 
     //console.log(data)
