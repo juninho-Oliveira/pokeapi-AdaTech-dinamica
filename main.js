@@ -1,12 +1,12 @@
 async function poke() {
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
     let data = await response.json()
 
     //console.log(data)
 
-    data.results.forEach(async element => {
+    data.results.forEach(async (element , index) => {
       const resp = await fetch(element.url);
       const poke = await resp.json();
 
@@ -18,7 +18,7 @@ async function poke() {
       let types = poke.types.map((ele) => ele.type.name);
 
       //console.log(poke.sprites.front_shiny)
-      
+
       //console.log(caminho)
 
 
@@ -34,7 +34,6 @@ async function poke() {
       </section>
       `
       teste.appendChild(div);
-      
 
     });
   } catch (error) {
@@ -48,29 +47,28 @@ async function poke() {
 poke();
 
 
-async function troca () {
-  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1`);
+async function troca() {
+  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
   let data = await response.json()
 
   let imagem = document.getElementById('imagem')
-  let fv = true;
 
   data.results.forEach(async element => {
     const resp = await fetch(element.url);
     const poke = await resp.json()
-
-    if (fv) {
-      imagem.src = poke.sprites.front_shiny;
-      fv = false;
-    }else if (fv === true) {
-      imagem.src = poke.sprites.front_default;
-      fv = true;
-    }
     
-    console.log('ola', imagem)
+    const img = poke.sprites;    
+
+    if (imagem.src === poke.sprites.front_default) {
+      imagem.src = poke.sprites.front_shiny;
+      console.log('aqui-1')
+    } else if (imagem.src === poke.sprites.front_shiny) {
+      imagem.src = poke.sprites.front_default;
+      console.log('aqui-2')
+    }
+
+    console.log(imagem)
   })
-  
-  
 }
 
 
@@ -103,8 +101,6 @@ async function buscar() {
 
   try {
 
-    
-
     const tipoPokemonSelect = document.getElementById('tipoSelector');
     //console.log(tipoPokemonSelect.value)
 
@@ -116,33 +112,33 @@ async function buscar() {
 
 
     setTimeout(() => {
-    
-    teste.innerHTML = '';
-     
-    data.pokemon.forEach(async ele => {
-      //console.log(ele)
 
-      const resp = await fetch(ele.pokemon.url);
-      const poke = await resp.json();
+      teste.innerHTML = '';
 
-      console.log(poke)
+      data.pokemon.forEach(async ele => {
+        //console.log(ele)
 
-      const img = document.createElement('img');
-      const div = document.createElement('div');
-      const caminho = img.src = poke.sprites.front_default;
-      let nome = poke.name
+        const resp = await fetch(ele.pokemon.url);
+        const poke = await resp.json();
 
-      let types = poke.types.map((ele) => ele.type.name);
+        console.log(poke)
 
-      div.innerHTML += `
+        const img = document.createElement('img');
+        const div = document.createElement('div');
+        const caminho = img.src = poke.sprites.front_default;
+        let nome = poke.name
+
+        let types = poke.types.map((ele) => ele.type.name);
+
+        div.innerHTML += `
       <h1>${nome}</h1>
       <img src="${caminho}" alt="${nome}">
       <p>Types: ${types}</p>
       
       `
-      teste.appendChild(div);
-    })
-  }, 1000);
+        teste.appendChild(div);
+      })
+    }, 1000);
   } catch (error) {
     alert('Erro', error)
   } finally {
