@@ -1,7 +1,7 @@
 async function poke() {
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=30`);
     let data = await response.json()
 
     //console.log(data)
@@ -10,7 +10,7 @@ async function poke() {
       const resp = await fetch(element.url);
       const poke = await resp.json();
 
-      /*const img = document.createElement('img');
+      const img = document.createElement('img');
       const div = document.createElement('div');
       const caminho = img.src = poke.sprites.front_default;
       let nome = poke.name
@@ -23,12 +23,12 @@ async function poke() {
       <p>Types: ${types}</p>
       
       `
-      teste.appendChild(div);*/
+      teste.appendChild(div);
 
     });
   } catch (error) {
     alert("Erro", error)
-  }finally {
+  } finally {
 
   }
 
@@ -64,12 +64,24 @@ obterInfo()
 async function buscar() {
 
   try {
+
+    
+
     const tipoPokemonSelect = document.getElementById('tipoSelector');
     //console.log(tipoPokemonSelect.value)
 
     const response = await fetch(`https://pokeapi.co/api/v2/type/` + tipoPokemonSelect.value);
     let data = await response.json()
 
+
+    //teste.innerHTML = '';
+    teste.innerHTML = 'Carregando....';
+
+
+    setTimeout(() => {
+    
+    teste.innerHTML = '';
+     
     data.pokemon.forEach(async ele => {
       //console.log(ele)
 
@@ -93,6 +105,7 @@ async function buscar() {
       `
       teste.appendChild(div);
     })
+  }, 1000);
   } catch (error) {
     alert('Erro', error)
   } finally {
