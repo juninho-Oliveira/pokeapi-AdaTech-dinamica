@@ -1,7 +1,7 @@
 async function poke() {
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=30`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1`);
     let data = await response.json()
 
     //console.log(data)
@@ -13,22 +13,28 @@ async function poke() {
       const img = document.createElement('img');
       const div = document.createElement('div');
 
-      const caminho = img.src = poke.sprites.front_default;
+      let caminho = img.src = poke.sprites.front_default;
       let nome = poke.name
       let types = poke.types.map((ele) => ele.type.name);
 
+      //console.log(poke.sprites.front_shiny)
+      
+      //console.log(caminho)
+
+
       div.innerHTML += `
       <section class="cards-container">
-      <button onclick="troca()"><-</button>
+      <button onclick="troca()"><img src= "/seta-lado-esquerdo.jpg" style="width: 20px;"></button>
       <section class="label">
         <h1>${nome}</h1>
-          <img src="${caminho}" alt="${nome}">
+          <img id="imagem" src="${caminho}" alt="${nome}">
         <p>Types: ${types}</p>
       </section>
-      <button onclick="volta()">-></button>
+      <button onclick="troca()"><img src= "/seta-lado-direito.jpg" style="width: 20px;"></button>
       </section>
       `
       teste.appendChild(div);
+      
 
     });
   } catch (error) {
@@ -40,6 +46,33 @@ async function poke() {
 }
 
 poke();
+
+
+async function troca () {
+  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1`);
+  let data = await response.json()
+
+  let imagem = document.getElementById('imagem')
+  let fv = true;
+
+  data.results.forEach(async element => {
+    const resp = await fetch(element.url);
+    const poke = await resp.json()
+
+    if (fv) {
+      imagem.src = poke.sprites.front_shiny;
+      fv = false;
+    }else if (fv === true) {
+      imagem.src = poke.sprites.front_default;
+      fv = true;
+    }
+    
+    console.log('ola', imagem)
+  })
+  
+  
+}
+
 
 
 async function obterInfo() {
