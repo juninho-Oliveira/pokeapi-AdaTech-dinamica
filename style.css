@@ -44,7 +44,7 @@ img {
   margin: 10px;
 }
 
-.label {
+.labels {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,7 +52,7 @@ img {
   width: 300px;
 }
 
-button {
+.botao {
   width: 70px;
   height: 30px;
   border-radius: 5px;
@@ -63,7 +63,7 @@ button {
   font-weight: 600;
 }
 
-button:hover {
+.botao:hover {
   background-color: white;
   color: #3B82F6;
   border: 2px solid #3B82F6;
@@ -72,4 +72,20 @@ button:hover {
 
 h1 {
   font-size: 20px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.cards-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 }

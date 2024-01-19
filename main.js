@@ -12,16 +12,21 @@ async function poke() {
 
       const img = document.createElement('img');
       const div = document.createElement('div');
+
       const caminho = img.src = poke.sprites.front_default;
       let nome = poke.name
-
       let types = poke.types.map((ele) => ele.type.name);
 
       div.innerHTML += `
-      <h1>${nome}</h1>
-      <img src="${caminho}" alt="${nome}">
-      <p>Types: ${types}</p>
-      
+      <section class="cards-container">
+      <button onclick="troca()"><-</button>
+      <section class="label">
+        <h1>${nome}</h1>
+          <img src="${caminho}" alt="${nome}">
+        <p>Types: ${types}</p>
+      </section>
+      <button onclick="volta()">-></button>
+      </section>
       `
       teste.appendChild(div);
 
@@ -74,7 +79,6 @@ async function buscar() {
     let data = await response.json()
 
 
-    //teste.innerHTML = '';
     teste.innerHTML = 'Carregando....';
 
 
@@ -88,7 +92,7 @@ async function buscar() {
       const resp = await fetch(ele.pokemon.url);
       const poke = await resp.json();
 
-      //console.log(poke)
+      console.log(poke)
 
       const img = document.createElement('img');
       const div = document.createElement('div');
