@@ -1,7 +1,7 @@
 async function poke() {
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=3`);
     let data = await response.json()
 
     //console.log(data)
@@ -20,7 +20,6 @@ async function poke() {
       //console.log(poke.sprites.front_shiny)
 
       //console.log(caminho)
-
 
       div.innerHTML += `
       <section class="cards-container">
@@ -48,7 +47,7 @@ poke();
 
 
 async function troca() {
-  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
+  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=3`);
   let data = await response.json()
 
   let imagem = document.getElementById('imagem')
@@ -61,23 +60,22 @@ async function troca() {
 
     if (imagem.src === poke.sprites.front_default) {
       imagem.src = poke.sprites.front_shiny;
-      console.log('aqui-1')
+      //console.log('aqui-1')
     } else if (imagem.src === poke.sprites.front_shiny) {
       imagem.src = poke.sprites.front_default;
-      console.log('aqui-2')
+      //console.log('aqui-2')
     }
 
-    console.log(imagem)
+    //console.log(imagem)
   })
 }
-
-
 
 async function obterInfo() {
 
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/type/`);
     let data = await response.json()
+
     const tipoPokemonSelect = document.getElementById('tipoSelector');
 
     data.results.forEach(type => {
@@ -121,7 +119,7 @@ async function buscar() {
         const resp = await fetch(ele.pokemon.url);
         const poke = await resp.json();
 
-        console.log(poke)
+        //console.log(poke)
 
         const img = document.createElement('img');
         const div = document.createElement('div');
