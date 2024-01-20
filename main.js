@@ -1,7 +1,7 @@
 async function poke() {
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=3`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
     let data = await response.json()
 
     //console.log(data)
@@ -13,7 +13,7 @@ async function poke() {
       const img = document.createElement('img');
       const div = document.createElement('div');
 
-      let caminho = img.src = poke.sprites.front_default;
+      let caminho =  poke.sprites.front_default;
       let nome = poke.name
       let types = poke.types.map((ele) => ele.type.name);
 
@@ -23,13 +23,13 @@ async function poke() {
 
       div.innerHTML += `
       <section class="cards-container">
-      <button onclick="troca()"><img src= "/seta-lado-esquerdo.jpg" style="width: 20px;"></button>
+      <button onclick="troca(${index})"><img src= "/seta-lado-esquerdo.jpg" style="width: 20px;"></button>
       <section class="label">
         <h1>${nome}</h1>
-          <img id="imagem" src="${caminho}" alt="${nome}">
+          <img id="imagem-${index}" src="${caminho}" alt="${nome}">
         <p>Types: ${types}</p>
       </section>
-      <button onclick="troca()"><img src= "/seta-lado-direito.jpg" style="width: 20px;"></button>
+      <button onclick="troca(${index})"><img src= "/seta-lado-direito.jpg" style="width: 20px;"></button>
       </section>
       `
       teste.appendChild(div);
@@ -46,27 +46,22 @@ async function poke() {
 poke();
 
 
-async function troca() {
-  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=3`);
+async function troca(index) {
+  let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=`);
   let data = await response.json()
 
-  let imagem = document.getElementById('imagem')
-
-  data.results.forEach(async element => {
+  data.results.forEach(async (element) => {
     const resp = await fetch(element.url);
     const poke = await resp.json()
     
-    const img = poke.sprites;    
-
+    let imagem = document.getElementById(`imagem-${index}`)
+    
     if (imagem.src === poke.sprites.front_default) {
       imagem.src = poke.sprites.front_shiny;
-      //console.log('aqui-1')
     } else if (imagem.src === poke.sprites.front_shiny) {
       imagem.src = poke.sprites.front_default;
-      //console.log('aqui-2')
-    }
+    } 
 
-    //console.log(imagem)
   })
 }
 
@@ -95,7 +90,7 @@ async function obterInfo() {
 
 obterInfo()
 
-async function buscar() {
+async function buscar(index) {
 
   try {
 
@@ -113,7 +108,7 @@ async function buscar() {
 
       teste.innerHTML = '';
 
-      data.pokemon.forEach(async ele => {
+      data.pokemon.forEach(async (ele, index) => {
         //console.log(ele)
 
         const resp = await fetch(ele.pokemon.url);
@@ -129,11 +124,16 @@ async function buscar() {
         let types = poke.types.map((ele) => ele.type.name);
 
         div.innerHTML += `
-      <h1>${nome}</h1>
-      <img src="${caminho}" alt="${nome}">
-      <p>Types: ${types}</p>
-      
-      `
+        <section class="cards-container">
+        <button onclick="troca(${index})"><img src= "/seta-lado-esquerdo.jpg" style="width: 20px;"></button>
+        <section class="label">
+          <h1>${nome}</h1>
+            <img id="imagem-${index}" src="${caminho}" alt="${nome}">
+          <p>Types: ${types}</p>
+        </section>
+        <button onclick="troca(${index})"><img src= "/seta-lado-direito.jpg" style="width: 20px;"></button>
+        </section>
+        `
         teste.appendChild(div);
       })
     }, 1000);
