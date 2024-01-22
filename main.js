@@ -1,7 +1,7 @@
 async function poke() {
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=30`);
     let data = await response.json()
 
     //console.log(data)
@@ -55,6 +55,9 @@ async function troca(index) {
     const poke = await resp.json()
     
     let imagem = document.getElementById(`imagem-${index}`)
+    
+    const fotos = poke.sprites
+    console.log()
     
     if (imagem.src === poke.sprites.front_default) {
       imagem.src = poke.sprites.front_shiny;
